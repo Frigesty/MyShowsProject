@@ -16,7 +16,7 @@ public class MainPage {
     public MainPage openMainPage() {
         open("/");
         try {
-            Thread.sleep(500);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -53,7 +53,7 @@ public class MainPage {
 
     @Step("Проверяем что мы авторизовались")
     public MainPage letsCheckThatWeAreAuthorized() {
-        $(".HomeRookie__title").shouldHave(text("GoodGuy"));
+        $(".HeaderLogin__user").shouldHave(text("GoodGuy"));
         return this;
     }
 
