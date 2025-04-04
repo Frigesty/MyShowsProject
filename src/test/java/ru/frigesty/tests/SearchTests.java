@@ -32,7 +32,7 @@ public class SearchTests extends TestBase {
         searchPage.checkThatTheSearchResultsForTvSeriesContainTheRequiredValue(value);
     }
 
-    @DisplayName("Тест на поиск фильмов по названию")
+    @DisplayName("Тест на поиск сериалов по названию")
     @Owner("Frigesty")
     @Tag("search")
     @Severity(SeverityLevel.CRITICAL)

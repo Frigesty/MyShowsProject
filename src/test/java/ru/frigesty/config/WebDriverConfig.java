@@ -3,13 +3,13 @@ package ru.frigesty.config;
 import org.aeonbits.owner.Config;
 
 @Config.Sources({
-        "classpath:properties/${env}.properties"
+        "classpath:${env}.properties"
 })
 
 public interface WebDriverConfig extends Config {
 
     @Key("browser")
-    @DefaultValue("CHROME")
+    @DefaultValue("chrome")
     String browser();
 
     @Key("browser_size")
@@ -17,7 +17,7 @@ public interface WebDriverConfig extends Config {
     String browserSize();
 
     @Key("browser_version")
-    @DefaultValue("134.0")
+    @DefaultValue("135.0")
     String browserVersion();
 
     @Key("baseUrl")

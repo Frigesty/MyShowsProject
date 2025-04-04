@@ -3,11 +3,14 @@ package ru.frigesty.tests;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.frigesty.data.Locale;
+import ru.frigesty.helpers.WithLogin;
 import ru.frigesty.pages.MainPage;
+import ru.frigesty.pages.ProfilePage;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -19,6 +22,7 @@ import java.util.stream.Stream;
 public class UITests extends TestBase {
 
     MainPage mainPage = new MainPage();
+    ProfilePage profilePage = new ProfilePage();
 
     static Stream<Arguments> siteShouldContainAllButtonsAfterLanguageSelectionTest() {
         return Stream.of(
@@ -39,5 +43,16 @@ public class UITests extends TestBase {
         mainPage.clickOnTheLanguageSelectionIconInTheFooter();
         mainPage.selectLanguageFromTheMenuThatOpens(locale);
         mainPage.checkThatMenuItemsMatchLocale(buttons);
+    }
+
+    @Tag("UI")
+    @DisplayName("Тест на проверку того что в профиле есть сериал")
+    @Severity(SeverityLevel.NORMAL)
+    @Owner("Frigesty")
+    @WithLogin
+    @Test
+    void checkThatByGoingToTheProfileThereWillBeASeriesTest() {
+        profilePage.openProfilePage();
+        profilePage.checkThatTheSeriesIsInTheBlockWithSeries();
     }
 }
