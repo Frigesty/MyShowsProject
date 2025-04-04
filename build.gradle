@@ -1,9 +1,7 @@
 plugins {
-
     id 'io.qameta.allure' version '2.11.2'
     id "io.freefair.lombok" version "8.12.1"
     id 'java'
-    id 'org.jetbrains.kotlin.jvm'
 }
 
 
@@ -44,7 +42,6 @@ dependencies {
             "org.assertj:assertj-core:3.27.3",
             "org.aspectj:aspectjweaver:1.9.22.1"
     )
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 tasks.withType(Test) {
