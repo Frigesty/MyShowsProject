@@ -56,9 +56,23 @@ tasks.withType(Test) {
     }
 }
 
-task simple_test(type: Test) {
+task ui_test(type: Test) {
     useJUnitPlatform{
-        includeTags("simple")
+        includeTags("interface")
+    }
+    systemProperty("env", System.getProperty("env", "local"))
+}
+
+task auto_test(type: Test) {
+    useJUnitPlatform{
+        includeTags("authorisation")
+    }
+    systemProperty("env", System.getProperty("env", "local"))
+}
+
+task search_test(type: Test) {
+    useJUnitPlatform{
+        includeTags("search")
     }
     systemProperty("env", System.getProperty("env", "local"))
 }

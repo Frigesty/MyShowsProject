@@ -1,5 +1,6 @@
 package ru.frigesty.pages;
 
+import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.*;
@@ -7,39 +8,45 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class SearchPage {
 
-    @Step("Проверяем что активна вкладка с сериалами на странице поиска")
+    private final SelenideElement activeTab = $(".SlidingTabs__tab.active");
+    private final SelenideElement tvSeriesResultsTable = $(".ShowsTable");
+    private final SelenideElement moviesResultsTable = $(".MoviesTable");
+    private final SelenideElement moviesTab = $("[class='SlidingTabs__tab']");
+    private final SelenideElement noResultsMessage = $(".SlidingTabs__showscontent");
+
+    @Step("Проверить, что активна вкладка 'Сериалы'")
     public SearchPage checkThatTheTvSeriesTabIsActiveOnTheSearchPage() {
-        $(".SlidingTabs__tab.active").shouldHave(text("Сериалы"));
+        activeTab.shouldHave(text("Сериалы"));
         return this;
     }
 
-    @Step("Проверяем что активна вкладка с фильмами на странице поиска")
+    @Step("Проверить, что активна вкладка 'Фильмы'")
     public SearchPage checkThatTheTabWithMoviesOnTheSearchPageIsActive() {
-        $(".SlidingTabs__tab.active").shouldHave(text("Фильмы"));
+        activeTab.shouldHave(text("Фильмы"));
         return this;
     }
 
-    @Step("Проверяем что в результатах поиска сериалов есть искомое значение")
+    @Step("Проверить, что в результатах поиска сериалов есть значение {0}")
     public SearchPage checkThatTheSearchResultsForTvSeriesContainTheRequiredValue(String value) {
-        $(".ShowsTable").shouldHave(text(value));
+        tvSeriesResultsTable.shouldHave(text(value));
         return this;
     }
 
-    @Step("Проверяем что в результатах поиска фильмов есть искомое значение")
+    @Step("Проверить, что в результатах поиска фильмов есть значение {0}")
     public SearchPage checkThatTheSearchResultsForMoviesContainTheRequiredValue(String value) {
-        $(".MoviesTable").shouldHave(text(value));
+        moviesResultsTable.shouldHave(text(value));
         return this;
     }
 
-    @Step("Переключаемся на вкладку фильмы")
+    @Step("Переключиться на вкладку 'Фильмы'")
     public SearchPage switchToTheMoviesTab() {
-        $("[class='SlidingTabs__tab']").click();
+        moviesTab.click();
         return this;
     }
 
-    @Step("Проверяем что нечего не нашлось")
+    @Step("Проверить, что ничего не найдено")
     public SearchPage checkThatNothingWasFound() {
-        $(".SlidingTabs__showscontent").shouldHave(text("Ничего не нашлось :-(\n" +
+        noResultsMessage.shouldHave(text("Ничего не нашлось :-(\n" +
                 "Попробуйте поискать по оригинальному (англ.) названию."));
         return this;
     }

@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import ru.frigesty.pages.MainPage;
 import ru.frigesty.pages.SearchPage;
 
-@Tag("simple")
+@Tag("search")
 @Story("Поиск")
 @Feature("Работа поиска")
 @DisplayName("Тесты на проверку поиска")
@@ -25,26 +25,26 @@ public class SearchTests extends TestBase {
     @ParameterizedTest
     @ValueSource(strings = {"Во все тяжкие", "Монолог фармацевта", "Охотник х Охотник"})
     void searchSeriesByTitleTest(String value) {
-        mainPage.openMainPage();
-        mainPage.enterTheNameOfTheSeriesInTheSearchField(value);
-        mainPage.clickOnTheFindButtonNextToTheSearchBar();
-        searchPage.checkThatTheTvSeriesTabIsActiveOnTheSearchPage();
-        searchPage.checkThatTheSearchResultsForTvSeriesContainTheRequiredValue(value);
+        mainPage.openMainPage()
+                .enterTheNameOfTheSeriesInTheSearchField(value)
+                .clickOnTheFindButtonNextToTheSearchBar();
+        searchPage.checkThatTheTvSeriesTabIsActiveOnTheSearchPage()
+                  .checkThatTheSearchResultsForTvSeriesContainTheRequiredValue(value);
     }
 
-    @DisplayName("Тест на поиск сериалов по названию")
+    @DisplayName("Тест на поиск фильмов по названию")
     @Owner("Frigesty")
     @Tag("search")
     @Severity(SeverityLevel.CRITICAL)
     @ParameterizedTest
     @ValueSource(strings = {"Грань будущего", "Бэтмен: Начало", "Письма к Джульетте"})
     void searchMoviesByTitleTest(String value) {
-        mainPage.openMainPage();
-        mainPage.enterTheNameOfTheSeriesInTheSearchField(value);
-        mainPage.clickOnTheFindButtonNextToTheSearchBar();
-        searchPage.switchToTheMoviesTab();
-        searchPage.checkThatTheTabWithMoviesOnTheSearchPageIsActive();
-        searchPage.checkThatTheSearchResultsForMoviesContainTheRequiredValue(value);
+        mainPage.openMainPage()
+                .enterTheNameOfTheSeriesInTheSearchField(value)
+                .clickOnTheFindButtonNextToTheSearchBar();
+        searchPage.switchToTheMoviesTab()
+                  .checkThatTheTabWithMoviesOnTheSearchPageIsActive()
+                  .checkThatTheSearchResultsForMoviesContainTheRequiredValue(value);
     }
 
     @DisplayName("Тест на поиск сериала которого нет на сайте")
@@ -53,10 +53,10 @@ public class SearchTests extends TestBase {
     @Severity(SeverityLevel.NORMAL)
     @Test
     void searchForASeriesThatIsNotOnTheSiteTest() {
-        mainPage.openMainPage();
-        mainPage.enterTheNameOfTheSeriesInTheSearchField("Повелители бездны");
-        mainPage.clickOnTheFindButtonNextToTheSearchBar();
-        searchPage.checkThatTheTvSeriesTabIsActiveOnTheSearchPage();
-        searchPage.checkThatNothingWasFound();
+        mainPage.openMainPage()
+                .enterTheNameOfTheSeriesInTheSearchField("Повелители бездны")
+                .clickOnTheFindButtonNextToTheSearchBar();
+        searchPage.checkThatTheTvSeriesTabIsActiveOnTheSearchPage()
+                  .checkThatNothingWasFound();
     }
 }

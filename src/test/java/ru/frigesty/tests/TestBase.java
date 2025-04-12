@@ -3,7 +3,6 @@ package ru.frigesty.tests;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
-import io.restassured.RestAssured;
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -11,7 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import ru.frigesty.config.WebDriverConfig;
 import ru.frigesty.helpers.Attach;
-
 import java.util.Map;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -36,7 +34,6 @@ public class TestBase {
         Configuration.browserSize = webDriverConfig.browserSize();
         Configuration.pageLoadStrategy = webDriverConfig.loadStrategy();
         Configuration.baseUrl = webDriverConfig.baseUrl();
-        RestAssured.baseURI = webDriverConfig.baseUrl();
     }
 
     private static void configureRemote() {

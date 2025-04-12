@@ -10,6 +10,7 @@ import static io.restassured.http.ContentType.JSON;
 import static ru.frigesty.helpers.CustomAllureListener.withCustomTemplates;
 
 public class ApiSpecs {
+
     public static RequestSpecification requestSpecBase = with()
             .log().all()
             .filter(withCustomTemplates())

@@ -15,7 +15,7 @@ import ru.frigesty.pages.ProfilePage;
 import java.util.List;
 import java.util.stream.Stream;
 
-@Tag("simple")
+@Tag("interface")
 @Story("Интерфейс")
 @Feature("Проверка отображения элементов интерфейса")
 @DisplayName("Тесты на проверку интерфейса")
@@ -39,10 +39,10 @@ public class UITests extends TestBase {
     @MethodSource
     @ParameterizedTest(name = "После выбора локали {0} должны отображаться кнопки {1}")
     void siteShouldContainAllButtonsAfterLanguageSelectionTest(Locale locale, List<String> buttons) {
-        mainPage.openMainPage();
-        mainPage.clickOnTheLanguageSelectionIconInTheFooter();
-        mainPage.selectLanguageFromTheMenuThatOpens(locale);
-        mainPage.checkThatMenuItemsMatchLocale(buttons);
+        mainPage.openMainPage()
+                .clickOnTheLanguageSelectionIconInTheFooter()
+                .selectLanguageFromTheMenuThatOpens(locale)
+                .checkThatMenuItemsMatchLocale(buttons);
     }
 
     @Tag("UI")
@@ -52,7 +52,7 @@ public class UITests extends TestBase {
     @WithLogin
     @Test
     void checkThatByGoingToTheProfileThereWillBeASeriesTest() {
-        profilePage.openProfilePage();
-        profilePage.checkThatTheSeriesIsInTheBlockWithSeries();
+        profilePage.openProfilePage()
+                    .checkThatTheSeriesIsInTheBlockWithSeries();
     }
 }

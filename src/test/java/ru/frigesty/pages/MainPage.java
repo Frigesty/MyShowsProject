@@ -1,5 +1,7 @@
 package ru.frigesty.pages;
 
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import ru.frigesty.data.Locale;
 import java.util.List;
@@ -12,7 +14,19 @@ import static ru.frigesty.data.Credentials.*;
 
 public class MainPage {
 
-    @Step("Открываем главную страницу")
+    private final SelenideElement mainLoginButton = $(".HeaderLogin").$(byText("Войти"));
+    private final SelenideElement usernameField = $("input.Input__field[autocomplete='username']");
+    private final SelenideElement passwordField = $("input.Input__field[autocomplete='current-password']");
+    private final SelenideElement popupLoginButton = $(".ModalLoginForm__submit");
+    private final SelenideElement authorizedUserLabel = $(".HeaderLogin__user");
+    private final SelenideElement loginErrorInputField = $(".Input__field.error");
+    private final SelenideElement footerLanguageSelectorIcon = $(".LangSwitcher .LangSwitcher-current .LangSwitcher-option");
+    private final ElementsCollection languageOptionsList = $$(".LangSwitcher-options .LangSwitcher-option");
+    private final ElementsCollection headerMenuItems = $$(".HeaderMenu .HeaderMenu__item");
+    private final SelenideElement searchInputField = $(".Search-input");
+    private final SelenideElement searchSubmitButton = $(".Search-submit");
+
+    @Step("Открыть главную страницу")
     public MainPage openMainPage() {
         open("/");
         try {
@@ -23,81 +37,71 @@ public class MainPage {
         return this;
     }
 
-    @Step("Кликаем на кнопку войти")
+    @Step("Нажать на кнопку 'Войти'")
     public MainPage clickOnTheEnterButton() {
-        $(".HeaderLogin").$(byText("Войти"))
-                .shouldBe(visible, clickable)
-                .click();
+        mainLoginButton.shouldBe(visible, clickable).click();
         return this;
     }
 
-    @Step("Вводим логин и пароль")
+    @Step("Ввести логин и пароль")
     public MainPage setLoginAndPassword() {
-        $("input.Input__field[autocomplete='username']").setValue(LOGIN);
-        $("input.Input__field[autocomplete='current-password']").setValue(PASSWORD);
+        usernameField.setValue(LOGIN);
+        passwordField.setValue(PASSWORD);
         return this;
     }
 
-    @Step("Вводим логин и пароль")
+    @Step("Ввести некорректный логин и пароль")
     public MainPage setBaLoginAndPassword() {
-        $("input.Input__field[autocomplete='username']").setValue("BadLogin");
-        $("input.Input__field[autocomplete='current-password']").setValue(PASSWORD);
+        usernameField.setValue("BadLogin");
+        passwordField.setValue(PASSWORD);
         return this;
     }
 
-    @Step("Кликаем на кнопку войти в окне Pop-up")
+    @Step("Нажать на кнопку входа в Pop-up окне")
     public MainPage clickOnTheLoginButtonInThePopUpWindow() {
-        $(".ModalLoginForm__submit").click();
+        popupLoginButton.shouldBe(visible, clickable).click();
         return this;
     }
 
-    @Step("Проверяем что мы авторизовались")
+    @Step("Проверить, что авторизация прошла успешно")
     public MainPage letsCheckThatWeAreAuthorized() {
-        $(".HeaderLogin__user").shouldHave(text("GoodGuy"));
+        authorizedUserLabel.shouldHave(text("GoodGuy"));
         return this;
     }
 
-    @Step("Проверяем что мы авторизовались")
+    @Step("Проверить, что отображается ошибка авторизации")
     public MainPage checkThatWeAreAuthorized() {
-        $(".Input__field.error").shouldBe(visible);
+        loginErrorInputField.shouldBe(visible);
         return this;
     }
 
-    @Step("Кликаем на иконку выбора языка в футере")
+    @Step("Нажать на иконку выбора языка в футере")
     public MainPage clickOnTheLanguageSelectionIconInTheFooter() {
-        $(".LangSwitcher .LangSwitcher-current .LangSwitcher-option")
-                .shouldBe(visible, clickable)
-                .scrollTo()
-                .click();
+        footerLanguageSelectorIcon.shouldBe(visible, clickable).scrollTo().click();
         return this;
     }
 
-    @Step("Выбираем в открывшимся меню язык {0}")
+    @Step("Выбрать язык {0} в меню")
     public MainPage selectLanguageFromTheMenuThatOpens(Locale locale) {
-        $$(".LangSwitcher-options .LangSwitcher-option")
-                .find(text(locale.name()))
-                .scrollTo()
-                .click();
+        languageOptionsList.find(text(locale.name())).scrollTo().click();
         return this;
     }
 
-    @Step("Проверяем что элементы меню соответствуют локали {0}")
+    @Step("Проверить, что пункты меню соответствуют локали {0}")
     public MainPage checkThatMenuItemsMatchLocale(List<String> buttons) {
-        $$(".HeaderMenu .HeaderMenu__item")
-                .shouldHave(texts(buttons));
-
+        headerMenuItems.shouldHave(texts(buttons));
         return this;
     }
 
-    @Step("Вводим название сериала в поле поиска")
+    @Step("Ввести название сериала в поле поиска")
     public MainPage enterTheNameOfTheSeriesInTheSearchField(String value) {
-        $(".Search-input").shouldBe(visible, enabled).setValue(value).shouldHave(value(value));
+        searchInputField.shouldBe(visible, enabled).setValue(value).shouldHave(value(value));
         return this;
     }
 
-    @Step("Нажимаем на кнопку найти рядом со строкой поиска")
+    @Step("Нажать на кнопку 'Найти'")
     public MainPage clickOnTheFindButtonNextToTheSearchBar() {
-        $(".Search-submit").shouldBe(visible, clickable).click();
+        searchSubmitButton.shouldBe(visible, clickable).click();
         return this;
     }
 }
